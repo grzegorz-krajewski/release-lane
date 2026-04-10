@@ -18,8 +18,13 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: "8.3"
-          extensions: mbstring, sqlite3, pdo_sqlite, dom, fileinfo
+          extensions: mbstring, sqlite3, pdo_sqlite, dom, fileinfo, xml, xmlwriter, ctype, tokenizer, intl, curl
           coverage: none
+
+      - name: Show PHP version and modules
+        run: |
+          php -v
+          php -m
 
       - name: Validate Composer files
         run: composer validate --no-check-publish
@@ -32,8 +37,11 @@ jobs:
           mkdir -p database
           touch database/database.sqlite
 
+      - name: Clear Composer cache
+        run: composer clear-cache
+
       - name: Install dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress
+        run: composer install --prefer-dist --no-interaction --no-progress -vvv
 
       - name: Generate application key
         run: php artisan key:generate
