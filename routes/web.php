@@ -18,6 +18,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::post('/webhooks/github', GitHubWebhookController::class)
+    ->name('webhooks.github');
+
 Route::middleware(['auth'])->get('/dashboard', DashboardController::class)->name('dashboard');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -36,8 +39,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/workflow-runs/sync', [WorkflowRunController::class, 'sync'])->name('workflow-runs.sync');
     Route::middleware(['auth'])->get('/webhook-events', [WebhookEventController::class, 'index'])
         ->name('webhook-events.index');
-    Route::post('/webhooks/github', GitHubWebhookController::class)
-        ->name('webhooks.github');
 });
 
 require __DIR__.'/auth.php';
