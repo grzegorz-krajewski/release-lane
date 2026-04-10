@@ -65,4 +65,35 @@ class GitHubService
             'data' => $response->json(),
         ];
     }
+
+    public function fetchPullRequests(GitHubConnection $connection, string $owner, string $repo): array
+    {
+        $response = Http::baseUrl('https://api.github.com')
+            ->acceptJson()
+            ->withToken($connection->access_token)
+            ->withHeaders([
+                'X-GitHub-Api-Version' => '2022-11-28',
+                'User-Agent' => config('app.name', 'ReleaseLane'),
+            ])
+            ->timeout(20)
+            ->get("/repos/{$owner}/{$repo}/pulls", [
+                'state' => 'all',
+                'sort' => 'updated',
+                'per_page' => 100,
+            ]);
+
+        if ($response->failed()) {
+            return [
+                'success' => false,
+                'status' => $response->status(),
+                'data' => [],
+            ];
+        }
+
+        return [
+            'success' => true,
+            'status' => $response->status(),
+            'data' => $response->json(),
+        ];
+    }
 }

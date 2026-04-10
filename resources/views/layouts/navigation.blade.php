@@ -23,6 +23,10 @@
                     <x-nav-link :href="route('repositories.index')" :active="request()->routeIs('repositories.*')">
                         Repositories
                     </x-nav-link>
+
+                    <x-nav-link :href="route('pull-requests.index')" :active="request()->routeIs('pull-requests.*')">
+                        Pull Requests
+                    </x-nav-link>
                 </div>
             </div>
 
