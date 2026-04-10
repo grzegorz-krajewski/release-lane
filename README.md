@@ -1,58 +1,377 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+![ReleaseLane Banner](./docs/banner/releaselane-banner.png)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# ReleaseLane
 
-## About Laravel
+**ReleaseLane** is an operational dashboard built with **Laravel** that integrates with **GitHub** to monitor projects, pipelines, merge requests, and release-related events in one place.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+> Internal dev workflow visibility for projects, pipelines, and releases.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Overview
 
-## Learning Laravel
+ReleaseLane is designed as an internal tool for developers, freelancers, and small teams who want a cleaner operational view over their GitHub activity.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Instead of jumping between multiple GitHub pages, ReleaseLane aims to provide a focused dashboard for:
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- project visibility
+- pipeline monitoring
+- merge request tracking
+- webhook event logging
+- release-oriented operational overview
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+The project is intentionally scoped as a practical MVP first, with room for future automation and cloud integrations.
 
-## Agentic Development
+---
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Core Features
 
-```bash
-composer require laravel/boost --dev
+- GitHub personal access token integration
+- Projects synchronization
+- Pipelines overview
+- Merge requests overview
+- GitHub webhook listener
+- Event log and activity timeline
+- Operational dashboard with recent activity
+- Foundation for future release/deployment tracking
 
-php artisan boost:install
+---
+
+## Planned MVP Modules
+
+### Authentication
+- User login/logout
+- Basic access control
+
+### GitHub Connection
+- GitHub base URL configuration
+- Personal access token storage
+- Connection test
+- Sync trigger
+
+### Projects
+- Projects list
+- Project details
+- Default branch
+- Quick project links
+
+### Pipelines
+- Pipeline status
+- Branch / ref
+- Commit SHA
+- Timing information
+- Quick access to pipeline URL
+
+### Merge Requests
+- Open and recent merge requests
+- Source/target branches
+- Author
+- Status and updated date
+
+### Webhook Events
+- GitHub webhook endpoint
+- Event type recognition
+- Raw payload storage
+- Summary generation for dashboard visibility
+
+### Dashboard
+- Recent pipelines
+- Failed pipelines
+- Open merge requests
+- Recent webhook activity
+- High-level project overview
+
+---
+
+## Tech Stack
+
+- **Laravel 12**
+- **PHP 8.3+**
+- **PostgreSQL**
+- **Blade**
+- **Livewire**
+- **Tailwind CSS**
+- **GitHub REST API**
+- **GitHub Webhooks**
+- **Docker / Docker Compose**
+
+---
+
+## Architecture Direction
+
+ReleaseLane follows a simple architecture for the MVP:
+
+- **Laravel** as the main backend and UI layer
+- **PostgreSQL** for local data persistence
+- **GitHub API** for synchronization of projects, pipelines, and merge requests
+- **GitHub Webhooks** for real-time event ingestion
+
+Future versions may include:
+- queue-based event processing
+- release/deployment tracking
+- Cloudflare Workers / Queues integration
+- alerting and automation features
+
+---
+
+## Project Status
+
+**Current status:** MVP in progress
+
+This repository is focused on building the first usable internal version of ReleaseLane.
+
+---
+
+## Screenshots
+
+Screenshots and UI previews will be added as the project evolves.
+
+<!-- Example:
+![Dashboard](./docs/screenshots/dashboard.png)
+![Project Details](./docs/screenshots/project-details.png)
+-->
+
+---
+
+## Repository Structure
+
+```text
+release-lane/
+├── app/
+│   ├── Http/
+│   ├── Models/
+│   ├── Services/
+│   │   └── GitHub/
+│   └── Actions/
+├── bootstrap/
+├── config/
+├── database/
+│   ├── factories/
+│   ├── migrations/
+│   └── seeders/
+├── docs/
+│   ├── banner/
+│   └── screenshots/
+├── public/
+├── resources/
+│   ├── css/
+│   ├── js/
+│   └── views/
+├── routes/
+├── storage/
+├── tests/
+├── docker/
+├── docker-compose.yml
+└── README.md
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## Data Model (Initial MVP)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Planned core tables:
 
-## Code of Conduct
+- `users`
+- `GitHub_connections`
+- `projects`
+- `pipelines`
+- `merge_requests`
+- `webhook_events`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+These tables provide the minimum foundation needed for synchronization, monitoring, and event tracking.
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Planned Routes
+
+```php
+/login
+/dashboard
+
+/settings/GitHub
+/settings/GitHub/test
+/settings/GitHub/sync
+
+/projects
+/projects/{project}
+
+/projects/{project}/pipelines
+/projects/{project}/merge-requests
+/projects/{project}/events
+
+/events
+/webhooks/GitHub
+```
+
+---
+
+## Local Development
+
+### Requirements
+
+- PHP 8.3+
+- Composer
+- Docker + Docker Compose
+- PostgreSQL
+- Node.js + npm
+
+### Installation
+
+```bash
+git clone https://github.com/YOUR_USERNAME/release-lane.git
+cd release-lane
+cp .env.example .env
+composer install
+npm install
+php artisan key:generate
+```
+
+### Start the environment
+
+Depending on your setup:
+
+```bash
+docker compose up -d
+```
+
+or run Laravel locally:
+
+```bash
+php artisan serve
+npm run dev
+```
+
+### Run migrations
+
+```bash
+php artisan migrate
+```
+
+---
+
+## Environment Variables
+
+Example variables expected for local development:
+
+```env
+APP_NAME=ReleaseLane
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost
+
+DB_CONNECTION=pgsql
+DB_HOST=postgres
+DB_PORT=5432
+DB_DATABASE=releaselane
+DB_USERNAME=releaselane
+DB_PASSWORD=secret
+
+GitHub_URL=https://GitHub.com
+GitHub_TOKEN=
+GitHub_WEBHOOK_SECRET=
+```
+
+---
+
+## GitHub Integration Plan
+
+ReleaseLane connects to GitHub through:
+
+1. **REST API**  
+   for fetching:
+   - projects
+   - pipelines
+   - merge requests
+
+2. **Webhooks**  
+   for receiving:
+   - pipeline events
+   - merge request events
+   - push/release-related events
+
+This allows the application to combine synchronized data with near real-time operational activity.
+
+---
+
+## Roadmap
+
+### v0.1
+- Laravel project bootstrap
+- Auth setup
+- Base layout and dashboard shell
+- Initial database schema
+
+### v0.2
+- GitHub connection configuration
+- GitHub service layer
+- Projects sync
+
+### v0.3
+- Pipelines and merge requests
+- Project details view
+
+### v0.4
+- Webhook listener
+- Event log
+- Dashboard activity widgets
+
+### v0.5
+- UI polish
+- README assets
+- screenshots
+- sample/demo data
+
+### Future
+- release tracking
+- deployment environments
+- rerun / trigger actions
+- queue-based processing
+- Cloudflare integration
+- notifications and alerts
+
+---
+
+## Why This Project
+
+ReleaseLane is meant to be a practical portfolio project that reflects real-world backend and operational concerns:
+
+- external API integration
+- webhook ingestion
+- internal tooling
+- dashboard design
+- event visibility
+- release workflow awareness
+
+It is not intended to replace GitHub, but to provide a more focused internal operational layer around it.
+
+---
+
+## Banner / Branding Notes
+
+This repository is intended to include a branded banner at the top of the README.
+
+Suggested direction:
+- modern dev-tool aesthetic
+- dark or cool-toned background
+- subtle pipeline / lane / flow motif
+- clean typography
+- GitHub/release operations vibe
+
+Banner placeholder path:
+
+```text
+./docs/banner/releaselane-banner.png
+```
+
+---
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+License will be added later.
+
+---
+
+## Author
+
+Created by **Grzegorz Krajewski**.
