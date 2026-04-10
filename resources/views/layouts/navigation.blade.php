@@ -27,6 +27,10 @@
                     <x-nav-link :href="route('pull-requests.index')" :active="request()->routeIs('pull-requests.*')">
                         Pull Requests
                     </x-nav-link>
+
+                    <x-nav-link :href="route('workflow-runs.index')" :active="request()->routeIs('workflow-runs.*')">
+                        Workflow Runs
+                    </x-nav-link>
                 </div>
             </div>
 

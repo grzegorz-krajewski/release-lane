@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\PullRequest;
+use App\Models\WorkflowRun;
 
 class Repository extends Model
 {
@@ -50,5 +51,10 @@ class Repository extends Model
     public function pullRequests(): HasMany
     {
         return $this->hasMany(PullRequest::class);
+    }
+
+    public function workflowRuns(): HasMany
+    {
+        return $this->hasMany(WorkflowRun::class);
     }
 }

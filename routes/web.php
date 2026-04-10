@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Settings\GitHubConnectionController;
 use App\Http\Controllers\RepositoryController;
 use App\Http\Controllers\PullRequestController;
+use App\Http\Controllers\WorkflowRunController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,6 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/repositories/sync', [RepositoryController::class, 'sync'])->name('repositories.sync');
     Route::get('/pull-requests', [PullRequestController::class, 'index'])->name('pull-requests.index');
     Route::post('/pull-requests/sync', [PullRequestController::class, 'sync'])->name('pull-requests.sync');
+    Route::get('/workflow-runs', [WorkflowRunController::class, 'index'])->name('workflow-runs.index');
+    Route::post('/workflow-runs/sync', [WorkflowRunController::class, 'sync'])->name('workflow-runs.sync');
 });
 
 require __DIR__.'/auth.php';

@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\GitHubConnection;
 use App\Models\Repository;
 use App\Models\PullRequest;
+use App\Models\WorkflowRun;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
@@ -44,9 +45,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Repository::class);
     }
-    
+
     public function pullRequests(): HasMany
     {
         return $this->hasMany(PullRequest::class);
+    }
+
+    public function workflowRuns(): HasMany
+    {
+        return $this->hasMany(WorkflowRun::class);
     }
 }
