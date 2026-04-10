@@ -9,12 +9,16 @@ use App\Models\WebhookEvent;
 use App\Support\Webhooks\GitHubWebhookSignatureValidator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Actions\GitHub\SyncPullRequestsAction;
+use App\Actions\GitHub\SyncWorkflowRunsAction;
 
 class GitHubWebhookController extends Controller
 {
     public function __invoke(
         Request $request,
-        GitHubWebhookSignatureValidator $validator
+        GitHubWebhookSignatureValidator $validator,
+        SyncPullRequestsAction $syncPullRequestsAction,
+        SyncWorkflowRunsAction $syncWorkflowRunsAction
     ): JsonResponse {
         $payload = $request->getContent();
         $signature = $request->header('X-Hub-Signature-256');
@@ -64,6 +68,25 @@ class GitHubWebhookController extends Controller
                 'payload' => $decoded,
             ]
         );
+
+        if ($repository && $user) {
+            match ($eventType) {
+                'pull_request' => $syncPullRequestsAction->syncRepository($user, $repository),
+                'workflow_run' => $syncWorkflowRunsAction->syncRepository($user, $repository),
+                'push' => $repository->update([
+                    'last_synced_at' => now(),
+                    'github_pushed_at' => data_get($decoded, 'repository.pushed_at', $repository->github_pushed_at),
+                    'raw_payload' => $repository->raw_payload,
+                ]),
+                default => null,
+            };
+
+            if ($eventType === 'push' && $repository) {
+                $repository->update([
+                    'last_synced_at' => now(),
+                ]);
+            }
+        }
 
         return response()->json([
             'message' => 'Webhook received.',
