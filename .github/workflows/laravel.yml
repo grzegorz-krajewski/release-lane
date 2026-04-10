@@ -21,10 +21,11 @@ jobs:
           extensions: mbstring, sqlite3, pdo_sqlite, dom, fileinfo, xml, xmlwriter, ctype, tokenizer, intl, curl
           coverage: none
 
-      - name: Show PHP version and modules
-        run: |
-          php -v
-          php -m
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
 
       - name: Validate Composer files
         run: composer validate --no-check-publish
@@ -37,11 +38,14 @@ jobs:
           mkdir -p database
           touch database/database.sqlite
 
-      - name: Clear Composer cache
-        run: composer clear-cache
+      - name: Install PHP dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress -vvv
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build frontend assets
+        run: npm run build
 
       - name: Generate application key
         run: php artisan key:generate
