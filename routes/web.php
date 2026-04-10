@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Settings\GitHubConnectionController;
+use App\Http\Controllers\RepositoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,6 +22,8 @@ Route::middleware('auth')->group(function () {
         Route::put('/github', [GitHubConnectionController::class, 'update'])->name('github.update');
         Route::post('/github/test', [GitHubConnectionController::class, 'test'])->name('github.test');
     });
+    Route::get('/repositories', [RepositoryController::class, 'index'])->name('repositories.index');
+    Route::post('/repositories/sync', [RepositoryController::class, 'sync'])->name('repositories.sync');
 });
 
 require __DIR__.'/auth.php';

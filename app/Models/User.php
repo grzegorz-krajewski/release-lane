@@ -9,8 +9,10 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\GitHubConnection;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\GitHubConnection;
+use App\Models\Repository;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
@@ -35,5 +37,10 @@ class User extends Authenticatable
     public function githubConnection(): HasOne
     {
         return $this->hasOne(GitHubConnection::class);
+    }
+
+    public function repositories(): HasMany
+    {
+        return $this->hasMany(Repository::class);
     }
 }

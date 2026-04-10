@@ -19,6 +19,10 @@
                     <x-nav-link :href="route('settings.github.edit')" :active="request()->routeIs('settings.github.*')">
                         GitHub Settings
                     </x-nav-link>
+
+                    <x-nav-link :href="route('repositories.index')" :active="request()->routeIs('repositories.*')">
+                        Repositories
+                    </x-nav-link>
                 </div>
             </div>
 
