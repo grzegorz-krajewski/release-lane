@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\PullRequest;
 use App\Models\WorkflowRun;
+use App\Models\WebhookEvent;
 
 class Repository extends Model
 {

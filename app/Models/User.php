@@ -15,6 +15,7 @@ use App\Models\GitHubConnection;
 use App\Models\Repository;
 use App\Models\PullRequest;
 use App\Models\WorkflowRun;
+use App\Models\WebhookEvent;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
@@ -54,5 +55,10 @@ class User extends Authenticatable
     public function workflowRuns(): HasMany
     {
         return $this->hasMany(WorkflowRun::class);
+    }
+
+    public function webhookEvents(): HasMany
+    {
+        return $this->hasMany(WebhookEvent::class);
     }
 }

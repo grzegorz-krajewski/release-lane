@@ -31,6 +31,10 @@
                     <x-nav-link :href="route('workflow-runs.index')" :active="request()->routeIs('workflow-runs.*')">
                         Workflow Runs
                     </x-nav-link>
+
+                    <x-nav-link :href="route('webhook-events.index')" :active="request()->routeIs('webhook-events.*')">
+                        Webhook Events
+                    </x-nav-link>
                 </div>
             </div>
 

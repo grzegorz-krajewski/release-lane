@@ -7,6 +7,8 @@ use App\Http\Controllers\RepositoryController;
 use App\Http\Controllers\PullRequestController;
 use App\Http\Controllers\WorkflowRunController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\WebhookEventController;
+use App\Http\Controllers\Webhooks\GitHubWebhookController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,6 +34,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/pull-requests/sync', [PullRequestController::class, 'sync'])->name('pull-requests.sync');
     Route::get('/workflow-runs', [WorkflowRunController::class, 'index'])->name('workflow-runs.index');
     Route::post('/workflow-runs/sync', [WorkflowRunController::class, 'sync'])->name('workflow-runs.sync');
+    Route::middleware(['auth'])->get('/webhook-events', [WebhookEventController::class, 'index'])
+        ->name('webhook-events.index');
+    Route::post('/webhooks/github', GitHubWebhookController::class)
+        ->name('webhooks.github');
 });
 
 require __DIR__.'/auth.php';

@@ -151,6 +151,53 @@
 
             <div class="bg-white shadow-sm sm:rounded-lg overflow-hidden">
                 <div class="border-b border-gray-100 px-6 py-4">
+                    <h3 class="text-lg font-semibold text-gray-900">Recent Webhook Events</h3>
+                </div>
+
+                <div class="p-6">
+                    @if ($recentWebhookEvents->isEmpty())
+                        <p class="text-sm text-gray-600">No webhook events received yet.</p>
+                    @else
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead>
+                                    <tr class="text-left text-sm font-semibold text-gray-700">
+                                        <th class="px-4 py-3">Event</th>
+                                        <th class="px-4 py-3">Action</th>
+                                        <th class="px-4 py-3">Repository</th>
+                                        <th class="px-4 py-3">Received</th>
+                                        <th class="px-4 py-3">Delivery ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100 text-sm text-gray-700">
+                                    @foreach ($recentWebhookEvents as $event)
+                                        <tr>
+                                            <td class="px-4 py-3">
+                                                <div class="font-medium">{{ $event->event_type }}</div>
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                {{ $event->action ?? '—' }}
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                {{ $event->repository?->full_name ?? $event->repository_full_name ?? '—' }}
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                {{ $event->received_at?->diffForHumans() ?? '—' }}
+                                            </td>
+                                            <td class="px-4 py-3 text-xs text-gray-500">
+                                                {{ $event->delivery_id ?? '—' }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            <div class="bg-white shadow-sm sm:rounded-lg overflow-hidden">
+                <div class="border-b border-gray-100 px-6 py-4">
                     <h3 class="text-lg font-semibold text-gray-900">Recently Active Repositories</h3>
                 </div>
 

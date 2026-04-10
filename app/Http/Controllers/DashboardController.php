@@ -42,6 +42,12 @@ class DashboardController extends Controller
             ->limit(8)
             ->get();
 
+        $recentWebhookEvents = $user->webhookEvents()
+            ->with('repository')
+            ->latest('received_at')
+            ->limit(8)
+            ->get();    
+
         return view('dashboard', [
             'repositoriesCount' => $repositoriesCount,
             'openPullRequestsCount' => $openPullRequestsCount,
@@ -50,6 +56,7 @@ class DashboardController extends Controller
             'recentPullRequests' => $recentPullRequests,
             'recentWorkflowRuns' => $recentWorkflowRuns,
             'recentRepositories' => $recentRepositories,
+            'recentWebhookEvents' => $recentWebhookEvents,
         ]);
     }
 }
